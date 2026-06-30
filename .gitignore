@@ -1,0 +1,12 @@
+# LaTeX build output
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.xdv
+
+# Windows alternate data stream metadata copied into WSL/Linux folders.
+*:Zone.Identifier
