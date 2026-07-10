@@ -1,0 +1,85 @@
+\documentclass{news}
+
+\lang     {english}
+\title    {The Ai Times:}
+\subtitle {News, rumors, revelations, and prophecies from the age of artificial intelligence.}
+\authors  {Alshival}
+\keywords {newspaper, stories, journalism}
+\date     {\today}
+\location {Universal}
+\cost     {}
+\issue    {1}
+\volume   {8}
+
+\begin{document}
+
+\by{Samuel Cavazos}{Top 100 Data \& Analytics Professional}{media/ait.png}
+
+\hh{New Jersey Picks A Sensor Fight}
+{\l{N}ew Jersey lawmakers are advancing a bill that would require fully driverless commercial vehicles to use cameras plus two additional sensing technologies. \href{https://electrek.co/2026/07/09/new-jersey-bill-tesla-camera-robotaxi/}{Electrek reports} that the bill would effectively block Tesla's camera-only Robotaxi design while leaving multi-sensor systems like Waymo's in a much better position.
+\par}
+
+The bill, S1677, would create a three-year autonomous-vehicle pilot program. Under the proposal, operators would need state authorization, crash reporting, and at least 50,000 miles of supervised testing in New Jersey before removing the human safety driver. The important detail is the hardware mandate: a fully driverless commercial vehicle would need cameras and two other sensor types, which in practice means something like radar and lidar.
+
+Tesla's claim is that cameras plus sufficiently good neural networks can solve driving because humans drive mostly by vision, which is at odds with the industry consensus.
+
+Most of the autonomous-vehicle industry has made a different bet: cameras are useful for color, signs, lanes, and visual context; radar is useful for velocity and poor weather; lidar is useful for precise 3D geometry. None of these sensors are magic. The point is redundancy. When one sensing channel fails, another one may still see enough of the world to keep the vehicle out of trouble.
+
+Elon Musk has argued that extra sensors can create conflicting inputs and reduce safety. That is not a crazy concern in the abstract; sensor fusion can fail if the system is poorly designed. But treating disagreement as a reason to remove sensors is strange engineering. Airplanes, spacecraft, factories, and medical systems do not become safer by throwing away independent measurements. They become safer by modeling uncertainty, detecting disagreement, and deciding what to do when the world does not look like the training set.
+
+\href{https://www.theverge.com/transportation/962309/new-jersey-robotaxi-bill-lidar-tesla}{The Verge reported} that Senator Andrew Zwicker, the bill's sponsor and a physicist at the Princeton Plasma Physics Laboratory, frames the proposal as a safety measure for the most densely populated state in the country, not as an anti-Tesla bill. The expertise question is awkward for Tesla. Musk has an undergraduate physics degree and a Wharton economics degree, but his lane is business command, not autonomous-vehicle safety research. In this situation, I am taking the plasma physicist's sensor-fusion caution over the Techno King's camera-only bravado.
+
+The state is not banning innovation. It is refusing to make the public road network the validation set.
+
+\hh{Anthropic's Jacobian Lens}
+{\l{A}nthropic's \href{https://www.anthropic.com/research/global-workspace}{July 6 research note} on a ``global workspace'' in language models introduces a tool called the Jacobian lens. The intuitive question is simple: if we nudged this internal activation right now, which words would the model become more likely to say later?
+\par}
+
+In a transformer, each token position carries a residual-stream vector \(h_{\ell,t}\) at layer \(\ell\). The remaining layers map that vector into later final-layer residual vectors \(h_{F,t'}\), which are then turned into vocabulary logits. For a small perturbation, first-order calculus says
+\[
+\delta h_{F,t'} \approx
+\frac{\partial h_{F,t'}}{\partial h_{\ell,t}}
+\delta h_{\ell,t}.
+\]
+That derivative matrix is the Jacobian. Anthropic's \href{https://transformer-circuits.pub/2026/workspace/index.html}{technical paper} averages those Jacobians over prompts and token positions,
+\[
+J_\ell =
+\mathbb{E}_{t,t' \geq t,\mathrm{prompt}}
+\left[
+\frac{\partial h_{F,t'}}{\partial h_{\ell,t}}
+\right],
+\]
+then composes the result with the model's unembedding matrix \(W_U\):
+\[
+\operatorname{lens}(h_\ell)=
+\operatorname{softmax}(W_U\,\operatorname{norm}(J_\ell h_\ell)).
+\]
+The output is a ranked list of tokens: words that the activation is, on average, positioned to help the model verbalize. This is different from the older logit lens, which tries to read intermediate layers as if they already lived in final-layer coordinates. The Jacobian lens asks how a representation would flow through the rest of the network.
+
+The connection to Jacobian matrices in differential geometry is real, but it is narrow. In differential geometry, a smooth map \(F:M\to N\) has a derivative \(dF_p:T_pM\to T_{F(p)}N\). Choose coordinates, and the matrix for that derivative is a Jacobian. It tells you how infinitesimal directions at the input point get pushed forward to infinitesimal directions at the output point.
+
+The Jacobian lens is doing that same local-linear move inside a model, but in this case the activation spaces are just high-dimensional Euclidean vector spaces. The perturbation \(\delta h_{\ell,t}\) is a tangent direction, the remaining layers are the map, and the Jacobian tells us how that direction is pushed forward toward future model outputs. No curvature, geodesics, or Riemannian metric is required. The useful differential-geometric slogan is simply: a Jacobian is the coordinate form of the pushforward.
+
+The more interesting mathematics is what Anthropic calls the J-space. The lens gives one vector per vocabulary token, and there are many more vocabulary tokens than residual-stream dimensions. That makes the set overcomplete: the vectors are not a basis, and there is no unique way to decompose an activation into token directions.
+
+Anthropic handles this with sparsity. At a given layer, the J-space is defined by sparse, nonnegative combinations of a small number of J-lens vectors, often no more than about 25 at a time. Geometrically, that makes it a union of \(k\)-dimensional cones:
+\[
+\mathcal{F} =
+\bigcup_{|S|=k}
+\operatorname{cone}\{v_i : i \in S\}.
+\]
+Essentially, an averaged pushforward through the network exposes a small, token-indexed workspace.
+
+\begin{minipage}[c]{.50\linewidth}
+{\large\cinzel
+{\normalsize The }
+
+\qquad Ai
+
+\qquad\quad Times}
+\end{minipage}%
+\begin{minipage}[c]{0.50\linewidth}
+\includegraphics[width=\linewidth]{media/ai-times-qr.png}
+\end{minipage}
+
+\end{document}
