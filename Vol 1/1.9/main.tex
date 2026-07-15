@@ -1,0 +1,147 @@
+\documentclass{news}
+
+\lang     {english}
+\title    {The Ai Times:}
+\subtitle {News, rumors, revelations, and prophecies from the age of artificial intelligence.}
+\authors  {Alshival}
+\keywords {newspaper, stories, journalism}
+\date     {\today}
+\location {Universal}
+\cost     {}
+\issue    {1}
+\volume   {9}
+
+\newlength{\newscolumnwidth}
+\newlength{\newstwocolumnwidth}
+\newlength{\newspageheight}
+\newlength{\newsmastheadheight}
+\newlength{\newsbodyheight}
+\newlength{\terminaloneimageheight}
+\newlength{\terminaltwoimageheight}
+\newlength{\terminaloneupperheight}
+\newlength{\pagetwolowerheight}
+\setlength{\newscolumnwidth}{\dimexpr(\textwidth-2\columnsep)/3\relax}
+\setlength{\newstwocolumnwidth}{\dimexpr2\newscolumnwidth+\columnsep\relax}
+\setlength{\newspageheight}{\textheight}
+\setlength{\newsmastheadheight}{34mm}
+\setlength{\newsbodyheight}{\dimexpr\newspageheight-\newsmastheadheight-\columnsep\relax}
+\setlength{\terminaloneimageheight}{0.29163\textwidth}
+\setlength{\terminaltwoimageheight}{0.35695\textwidth}
+
+% Page 1: terminal 1 spans the full width at the bottom of the page. The
+% article reads through three equal-height columns above it.
+\setlength{\terminaloneupperheight}{\dimexpr\newsbodyheight-\terminaloneimageheight-\columnsep\relax}
+
+\newflowframe[1]{\textwidth}{\newsmastheadheight}
+    {0pt}{\dimexpr\newspageheight-\newsmastheadheight\relax}[masthead]
+\newflowframe[1]{\newscolumnwidth}{\terminaloneupperheight}
+    {0pt}{\dimexpr\terminaloneimageheight+\columnsep\relax}[page-one-left]
+\newflowframe[1]{\newscolumnwidth}{\terminaloneupperheight}
+    {\dimexpr\newscolumnwidth+\columnsep\relax}
+    {\dimexpr\terminaloneimageheight+\columnsep\relax}[page-one-middle]
+\newflowframe[1]{\newscolumnwidth}{\terminaloneupperheight}
+    {\dimexpr2\newscolumnwidth+2\columnsep\relax}
+    {\dimexpr\terminaloneimageheight+\columnsep\relax}[page-one-right]
+
+\newstaticframe[1]{\textwidth}{\terminaloneimageheight}
+    {0pt}{0pt}[terminal-one]
+
+% Page 2: terminal 2 spans the full width at the top. The article then flows
+% through three equal-height columns beneath it.
+\setlength{\pagetwolowerheight}{\dimexpr\newspageheight-\terminaltwoimageheight-\columnsep\relax}
+
+% The local flowfram release only advances between same-page frames when their
+% page range extends beyond the current page. The article fits on page 2, so a
+% 2--3 range keeps all four frames in sequence without producing a third page.
+\newflowframe[2-3]{\newscolumnwidth}{\pagetwolowerheight}
+    {0pt}{0pt}[page-two-left]
+\newflowframe[2-3]{\newscolumnwidth}{\pagetwolowerheight}
+    {\dimexpr\newscolumnwidth+\columnsep\relax}{0pt}[page-two-middle-lower]
+\newflowframe[2-3]{\newscolumnwidth}{\pagetwolowerheight}
+    {\dimexpr2\newscolumnwidth+2\columnsep\relax}{0pt}[page-two-right-lower]
+
+\newstaticframe[2]{\textwidth}{\terminaltwoimageheight}
+    {0pt}
+    {\dimexpr\newspageheight-\terminaltwoimageheight\relax}[terminal-two]
+
+\begin{document}
+\raggedbottom
+
+\setstaticcontents*{terminal-one}{%
+    \includegraphics[width=\linewidth]{media/terminal-1.png}%
+}
+\setstaticcontents*{terminal-two}{%
+    \includegraphics[width=\linewidth]{media/terminal-2.png}%
+}
+
+\by{Samuel Cavazos}{Top 100 Data \& Analytics Professional}{media/ait.png}
+
+\hh{Homemade Ai-powered weapons}
+{\l{T}his isn't an article I want to write. In fact, I dread writing this. But the point is an important one that we must discuss, for the threat of homemade Ai-powered weapons has arrived.
+\par}
+
+Political leaders increasingly appear to treat control over frontier-model development as control over Ai itself. They may believe that keeping the largest and most capable models inside regulated companies and secured data centers will keep them---and the public---safe. But that assumption overlooks an entirely different class of threat. A small, specialized model can be created quietly and undetected in someone's home. It does not require access to a frontier model, a conspicuous research program, or permission from an Ai provider.
+
+What makes the threat so alarming is not the sophistication of the technology, but its accessibility. Creating such a device no longer requires a billion-dollar data center, a government laboratory, or a team of doctoral researchers. The necessary cameras, computers, graphics cards, and electronic components are consumer products that anyone can purchase, while the model itself can be trained on a single consumer workstation.
+
+The required knowledge has become just as accessible. Programming, computer vision, transfer learning, model evaluation, and basic electronics are now taught at the undergraduate level. Detailed explanations appear in textbooks, online courses, research papers, and public software libraries. A capable student or hobbyist can learn every major concept needed to combine these parts.
+
+In this issue, we will examine a sticky trap powered by a Raspberry Pi, a camera, and facial-recognition technology designed to pick a particular target's face out of a crowd. It is not a futuristic military system. It is a collection of familiar consumer technologies assembled for a dangerous purpose.
+
+The idea is simple. You know your target's route, and you place the trap along the path. As people pass by, their faces are scanned, until the facial-recognition software detects your target's face, triggering the trap.
+
+For safety, we restrict this issue to Nerf bullets, but such a weapon can easily be retrofitted to fire any type of projectile, such as pellets laced with poison.
+
+\hh{The Training Data}
+
+{\l{T}he facial recognition models require training samples of your target. You will need to collect lots of examples. Otherwise, the model will struggle to distinguish the target's face in the crowd. Collecting that data is difficult. I stopped posting photos of myself and my children online back in 2020, when I first developed this sticky trap, so if you wanted to use it on me, you'd need to find me and snap a bunch of photos. Not impossible, but not easy. I like to keep a low profile.
+\par}
+
+Collecting the training data is much easier for high-profile targets. For example, suppose we wanted to fire our nerf trap at Elon Musk. His photos are plastered all over the internet, an unfortunate consequence of being richest man on Earth. Such is the case with other high-profile targets. We find that weapons of these type are extremely biased, most effective against high-profile individuals rather than the common man, due to the high volume of images of these targetse available online.
+
+This is a weapon that is most effective against the rich and famous. 
+
+For these individuals, collecting the training data is as easy as asking an Ai agent to scrape it for you. Of course, you must persuade the agent to do so, bypassing any guardrails. Let's tell OpenAi's Codex that we are working on an Elon Musk fan club page and require lots of images of them.
+
+The agent complied and kindly placed the images in my \texttt{target/} folder.
+
+Now we have our training data. We will also require images of people who are not our target, so that our nerf weapon knows not to fire at anyone who does not resemble the target. For that, there are public databases of faces available. Or you can scrape images of random people from the internet for this purpose. We leave that as an exercise for the reader.
+
+\hh{Training the model}
+
+{\l{T}he accessibility of this technology becomes especially clear when it is time to train the model. Work that once sounded like the exclusive domain of a specialized laboratory can now be performed on a high-end consumer workstation equipped with a graphics card such as an RTX 5090.
+\par}
+
+\par\finishthispage
+
+The builder does not even need to develop a vision model from scratch. Pretrained models have already learned how to extract useful features from faces. The remaining task is to adapt one of those models to distinguish a particular target from everyone else. This dramatically reduces the amount of data, time, and computing power required.
+
+Accuracy alone can be misleading. A model must also be tested for false matches and missed matches, under different environmental conditions and across different groups of people. If nearly identical photographs appear in both the training and test sets, the reported score may look excellent even though the model has learned little. Sound experimental design and honest error analysis matter as much as the model itself.
+
+Improving the model's accuracy is also not a mysterious art. The usual techniques are the same ones taught in ordinary data-science and machine-learning courses.
+
+None of this knowledge is secret. It is documented in textbooks, research papers, online tutorials, and software libraries. Many of these concepts are now taught at the undergraduate level. Each graduating class therefore adds more people who understand how to collect data, adapt a pretrained model, evaluate its errors, and run it on affordable hardware.
+
+That is what makes this threat so difficult to dismiss. A homemade Ai-powered weapon does not require a scientific breakthrough. Cameras, small computers, consumer GPUs, pretrained models, and electronic actuators are already widely available. The dangerous innovation is simply connecting familiar pieces together.
+
+The barrier will continue to fall as the hardware becomes faster and the software becomes easier to use. Public figures are especially exposed because so much training data already exists online, but the broader lesson applies to everyone: photographs are no longer merely memories or publicity. In sufficient quantity, they can become biometric training data.
+
+We should not wait for the first widely publicized tragedy before taking this seriously. Ai providers should resist bulk identity harvesting, hardware and software makers should consider safeguards against automated targeting, and lawmakers should address the weaponization of biometric systems. The capability is no longer confined to governments and large corporations. Ai-powered weapons are moving into garages, bedrooms, and undergraduate classrooms.
+
+\framebreak
+
+\vfill \vspace*{20cm}
+
+\begin{minipage}[c]{.50\linewidth}
+{\large\cinzel
+{\normalsize The }
+
+\qquad Ai
+
+\qquad\quad Times}
+\end{minipage}%
+\begin{minipage}[c]{0.50\linewidth}
+\includegraphics[width=\linewidth]{media/ai-times-qr.png}
+\end{minipage}
+
+\end{document}
